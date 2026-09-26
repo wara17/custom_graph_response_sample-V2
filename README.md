@@ -62,6 +62,9 @@ curl -X POST http://localhost:8080/graphql \
 Client เรียก `POST /graphql` แบบ GraphQL ปกติ แล้ว `GraphQlResponseWrapFilter` (OncePerRequestFilter)
 จะดัก response หลัง `chain.doFilter()` → เช็ค `errors` ก่อน → แยกไป `wrapSuccess` / `wrapFailed`
 
+> อธิบาย flow แบบละเอียด (ทำไมต้องเช็ค async, ทำไมต้องมี ContentCachingWrapper, เดินโค้ดทีละบรรทัด)
+> ดูที่ [`docs/graphql-response-filter.md`](docs/graphql-response-filter.md)
+
 ```json
 // success
 { "status": { "code": "0000", "message": "success" }, "data": { "bookById": { "title": "Moby Dick" } } }

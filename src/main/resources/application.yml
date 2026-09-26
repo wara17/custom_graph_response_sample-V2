@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: graphql-demo
+  graphql:
+    path: /graphql
+    graphiql:
+      enabled: true      # เปิด UI ที่ http://localhost:8080/graphiql
+      path: /graphiql
+    schema:
+      locations: classpath:graphql/
+      printer:
+        enabled: true    # ดู schema ที่ http://localhost:8080/graphql/schema
+
+logging:
+  level:
+    org.springframework.graphql: INFO

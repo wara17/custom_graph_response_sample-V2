@@ -1,0 +1,268 @@
+{
+  "info": {
+    "name": "graphql-demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Query - books",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\n  books {\n    id\n    title\n    pageCount\n    author {\n      fullName\n    }\n  }\n}",
+            "variables": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "Query - bookById (variables)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query BookById($id: ID!) {\n  bookById(id: $id) {\n    id\n    title\n    author {\n      fullName\n    }\n  }\n}",
+            "variables": "{\n  \"id\": \"book-1\"\n}"
+          }
+        }
+      }
+    },
+    {
+      "name": "Query - authors with books",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\n  authors {\n    id\n    fullName\n    books {\n      title\n    }\n  }\n}",
+            "variables": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "Mutation - addBook",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation AddBook($input: BookInput!) {\n  addBook(input: $input) {\n    id\n    title\n    author {\n      fullName\n    }\n  }\n}",
+            "variables": "{\n  \"input\": {\n    \"title\": \"Dune\",\n    \"pageCount\": 412,\n    \"authorId\": \"author-2\"\n  }\n}"
+          }
+        }
+      }
+    },
+    {
+      "name": "Mutation - deleteBook",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation DeleteBook($id: ID!) {\n  deleteBook(id: $id)\n}",
+            "variables": "{\n  \"id\": \"book-3\"\n}"
+          }
+        }
+      }
+    },
+    {
+      "name": "Raw JSON (แบบไม่ใช้ GraphQL tab)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query($id: ID!) { bookById(id: $id) { title } }\",\n  \"variables\": { \"id\": \"book-2\" }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "[Wrapped] success - bookById",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query BookById($id: ID!) {\n  bookById(id: $id) {\n    id\n    title\n    author { fullName }\n  }\n}",
+            "variables": "{\n  \"id\": \"book-1\"\n}"
+          }
+        }
+      }
+    },
+    {
+      "name": "[Wrapped] no data - bookById",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query BookById($id: ID!) {\n  bookById(id: $id) { id title }\n}",
+            "variables": "{\n  \"id\": \"not-exist\"\n}"
+          }
+        }
+      }
+    },
+    {
+      "name": "[Wrapped] error - addBook unknown author",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/graphql",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation {\n  addBook(input: {title: \"X\", authorId: \"nope\"}) { id }\n}",
+            "variables": ""
+          }
+        }
+      }
+    }
+  ]
+}

@@ -15,13 +15,23 @@
     <artifactId>graphql-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>graphql-demo</name>
-    <description>Spring Boot 3.3.7 + Spring for GraphQL 1.3.3 (Kotlin)</description>
+    <description>Spring Boot 3.3.7 + Spring for GraphQL 1.4.6 (Kotlin)</description>
 
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.9.25</kotlin.version>
-        <!-- Boot 3.3.7 จัดการเป็น 1.3.3 อยู่แล้ว ประกาศไว้เพื่อ pin เวอร์ชันให้ชัด -->
-        <spring-graphql.version>1.3.3</spring-graphql.version>
+        <!--
+          Boot 3.3.7 ปกติล็อก spring-graphql=1.3.3 / graphql-java=22.3
+          สอง property นี้เป็น "Version Properties" ที่ Boot เปิดให้ override อย่างเป็นทางการ
+          (ดู https://docs.spring.io/spring-boot/appendix/dependency-versions/properties.html)
+          เพื่อขยับไปใช้ spring-graphql 1.4.6 โดยไม่แตะ Spring Boot parent version
+
+          ความเสี่ยงที่ยังไม่ verify: 1.4.6 ถูก build/test คู่กับ Spring Framework 6.2.19
+          (Boot 3.4.9) แต่โปรเจกต์นี้ยังอยู่ Boot 3.3.7 -> Spring Framework 6.1.14
+          ต้องรัน `mvn clean test` จริงถึงจะรู้ว่าเข้ากันได้ 100% หรือไม่
+        -->
+        <spring-graphql.version>1.4.6</spring-graphql.version>
+        <graphql-java.version>24.3</graphql-java.version>
     </properties>
 
     <dependencies>
@@ -56,11 +66,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.graphql</groupId>
-            <artifactId>spring-graphql-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!--
+          ไม่ใช้ spring-graphql-test แล้ว (ตัดออกโดยตั้งใจ):
+          - spring-graphql-test ต้องเป็น version เดียวกับ spring-graphql เสมอ (release เป็นคู่)
+            การอัปเกรดยิ่งน้อยจุดที่ผูกกับ version นี้ยิ่งดี
+          - ExecutionGraphQlServiceTester เรียก engine ตรงๆ ไม่ผ่าน servlet filter chain
+            เลยไม่เคยทดสอบ GraphQlResponseWrapFilter จริง
+          - ย้ายไปเทสต์ผ่าน MockMvc POST /graphql แทน (ดู BookControllerTest.kt) ซึ่งพึ่งพา
+            แค่ spring-boot-starter-test ที่ไม่ขยับตาม spring-graphql เวอร์ชันเลย
+        -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit5</artifactId>

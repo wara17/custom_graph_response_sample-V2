@@ -1,6 +1,11 @@
 # graphql-demo
 
-Spring Boot **3.3.7** + Spring for GraphQL **1.3.3** + Kotlin 1.9.25 + Java **17** (Maven)
+Spring Boot **3.3.7** + Spring for GraphQL **1.4.6** + Kotlin 1.9.25 + Java **17** (Maven)
+
+> ⚠️ อัปเกรดจาก spring-graphql 1.3.3 → 1.4.6 แล้ว (ผ่าน property override, ไม่แตะ Boot parent
+> version) แต่ **ยังไม่ได้ verify ด้วย `mvn test` จริง** เพราะไม่มีเครื่องที่ build ได้ตอนทำ —
+> รัน `mvn clean test` ก่อนใช้งานจริงเสมอ รายละเอียดความเสี่ยงอยู่ใน `pom.xml` (comment เหนือ
+> `spring-graphql.version`) และ skill `spring-graphql-wrap-and-upgrade`
 
 ## Run
 
